@@ -15,17 +15,26 @@ class DespesaController {
         }
     }
 
-    create = async (req, res) => {
-        try {
-            const novaDespesa = await Despesas.criarDespesa(req.body);
-            return res.status(201).json(novaDespesa);
-        } catch (error) {
-            return res.status(500).json({
-                message: 'Erro ao criar despesa',
-                error: error.message
-            });
-        }
+   
+create = async (req, res) => {
+    try {
+        console.log('Dados recebidos:', req.body);
+
+        const novaDespesa = await Despesas.criarDespesa(req.body);
+
+        console.log('Despesa cadastrada:', novaDespesa);
+
+        return res.redirect('/despesas/nova?sucesso=1');
+
+    } catch (error) {
+        console.error('Erro ao cadastrar:', error);
+
+        return res.status(500).send(
+            'Erro ao cadastrar despesa: ' + error.message
+        );
     }
+}
+
 
     update = async (req, res) => {
         try {
